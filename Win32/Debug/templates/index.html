@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>ทดสอบระบบ RESTful Server</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="js/ie-emulation-modes-warning.js"></script>
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="#">Bootstrap theme</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container" role="main">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Query Data</h1>
+                <div class="form-group">
+                    <label for="inputTable">Table</label>
+                    <input type="text" class="form-control" id="inputTable" placeholder="Table">
+                </div>
+                <div class="form-group">
+                    <label for="inputField">Field</label>
+                    <input type="text" class="form-control" id="inputField" placeholder="Field">
+                </div>
+                <div class="form-group">
+                    <label for="inputValue">Value</label>
+                    <input type="text" class="form-control" id="inputValue" placeholder="Value">
+                </div>
+                <p>
+                    <button type="button" class="btn btn-lg btn-default" id="openquery">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Open Query
+                    </button>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h1>Insert Data</h1>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="insertTable">Table</label>
+                            <input type="text" class="form-control" id="insertTable" placeholder="Table">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="insertField1">Field1</label>
+                            <input type="text" class="form-control" id="insertField1" placeholder="Field Code">
+                        </div>
+                        <div class="form-group">
+                            <label for="insertField2">Field2</label>
+                            <input type="text" class="form-control" id="insertField2" placeholder="Field Description">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="insertValue1">Value1</label>
+                            <input type="text" class="form-control" id="insertValue1" placeholder="Value Code">
+                        </div>
+                        <div class="form-group">
+                            <label for="insertValue2">Value2</label>
+                            <input type="text" class="form-control" id="insertValue2" placeholder="Value Description">
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                    <button type="button" class="btn btn-lg btn-default" id="savedata">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
+                    </button>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="result" class="table table-striped">
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <input id="exampleInputFile" type="file" accept="image/gif, image/jpeg, image/png" >
+                    <p class="help-block">Example block-level help text here.</p>
+                </div>
+                <textarea id="base"></textarea>
+            </div>
+            <p>
+                <button type="button" class="btn btn-lg btn-default" id="upload">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> upload
+                </button>
+            </p>
+        </div>
+    </div>
+    <!-- /container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+
+            function buildHtmlTable(myList) {
+                $('#result tr').remove();
+                var columns = addAllColumnHeaders(myList);
+
+                for (var i = 0 ; i < myList.length ; i++) {
+                    var row$ = $('<tr/>');
+                    for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+                        var cellValue = myList[i][columns[colIndex]];
+
+                        if (cellValue == null) { cellValue = ""; }
+
+                        row$.append($('<td/>').html(cellValue));
+                    }
+                    $("#result").append(row$);
+                }
+            }
+
+            function addAllColumnHeaders(myList) {
+                var columnSet = [];
+                var headerTr$ = $('<tr/>');
+
+                for (var i = 0 ; i < myList.length ; i++) {
+                    var rowHash = myList[i];
+                    for (var key in rowHash) {
+                        if ($.inArray(key, columnSet) == -1){
+                            columnSet.push(key);
+                            headerTr$.append($('<th/>').html(key));
+                        }
+                    }
+                }
+                $("#result").append(headerTr$);
+                return columnSet;
+            }
+
+            function readURL(input) {
+    			if (input.files && input.files[0]) {
+    				var reader = new FileReader();
+    				reader.onload = function (e) {
+    					$('#falseinput').attr('src', e.target.result);
+    					$('#base').val(e.target.result);
+    				};
+    				reader.readAsDataURL(input.files[0]);
+    			}
+    		}
+
+            function base64ToJSON(bytes) {
+                //var jsonString = Base64.encode(JSON.stringify(bytes));
+                return JSON.stringify(bytes);
+            };
+
+            function onOpenQueryClick() {
+                var inputTable = document.getElementById('inputTable');
+                var inputField = document.getElementById('inputField');
+                var inputValue = document.getElementById('inputValue');
+                $.ajax({
+                    type: "GET",
+                    url: "setgroup",
+                    contentType : "application/json;charset=utf-8",
+                    dataType: "json",
+                    data: {table: inputTable.value, field: inputField.value, value: inputValue.value},
+                    success: function(data) {
+                        buildHtmlTable(data);
+                    },
+                    error: function(xhr, status, erro) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+            function onSaveClick() {
+                var insertTable = document.getElementById('insertTable');
+                var insertField1 = document.getElementById('insertField1');
+                var insertField2 = document.getElementById('insertField2');
+                var insertValue1 = document.getElementById('insertValue1');
+                var insertValue2 = document.getElementById('insertValue2');
+                var datajson = JSON.stringify([{table: insertTable.value, field1: insertField1.value, field2: insertField2.value, value1: insertValue1.value, value2: insertValue2.value}]);
+                $.ajax({
+                    type: "POST",
+                    url: "setgroup",
+                    contentType : "application/json;charset=utf-8",
+                    dataType: "json",
+                    data: datajson,
+                    success: function(data) {
+                        buildHtmlTable(data);
+                    },
+                    error: function(xhr, status, erro) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+            function onUploadClick() {
+                var input = $('#base').val();
+                //console.log(input);
+                $.ajax({
+                    type: "POST",
+                    url: "datasnap/rest/UploadImage/test",
+                    cache: false,
+                    contentType : "application/json;charset=utf-8",
+                    dataType: "json",
+                    data: {test: '55555'},
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(xhr, status, erro) {
+                        //parser = JSON.parse(xhr.responseText);
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+            $('#inputTable').keyup(function(){
+                this.value = this.value.toUpperCase();
+            });
+
+            $('#insertTable').keyup(function(){
+                this.value = this.value.toUpperCase();
+            });
+
+            $('#inputField').keyup(function(){
+                this.value = this.value.toUpperCase();
+            });
+
+            $('#insertField1').keyup(function(){
+                this.value = this.value.toUpperCase();
+            });
+
+            $('#insertField2').keyup(function(){
+                this.value = this.value.toUpperCase();
+            });
+
+            $("#openquery").click(function() {
+                onOpenQueryClick();
+            });
+
+            $("#savedata").click(function() {
+                onSaveClick();
+            });
+
+            $("#upload").click(function() {
+                onUploadClick();
+            });
+
+            $('#exampleInputFile').change(function() {
+                readURL(this);
+            });
+        });
+    </script>
+</body>
+
+</html>
